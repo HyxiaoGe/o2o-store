@@ -1,5 +1,8 @@
 package com.hyxiao.o2ostore.controller;
 
+import com.hyxiao.o2ostore.common.BusinessException;
+import com.hyxiao.o2ostore.common.CommonRes;
+import com.hyxiao.o2ostore.common.EmBusinessError;
 import com.hyxiao.o2ostore.model.UserModel;
 import com.hyxiao.o2ostore.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +26,15 @@ public class UserController {
 
     @RequestMapping("/get")
     @ResponseBody
-    public UserModel getUser(@RequestParam(name="id")Integer id) {
-        return userService.getUser(id);
+    public CommonRes getUser(@RequestParam(name="id")Integer id) throws BusinessException {
+        UserModel userModel = userService.getUser(id);
+        if(userModel == null){
+            //return CommonRes.create(new CommonError(EmBusinessError.NO_OBJECT_FOUND),"fail");
+            throw new BusinessException(EmBusinessError.NO_OBJECT_FOUND);
+        }else{
+            return CommonRes.create(userModel);
+        }
+
     }
 
 }
