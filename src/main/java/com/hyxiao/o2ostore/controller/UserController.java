@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller("/user")
 @RequestMapping("/user")
@@ -22,6 +23,14 @@ public class UserController {
     @ResponseBody
     public String test(){
         return "test";
+    }
+
+    @RequestMapping("/index")
+    public ModelAndView index(){
+        String userName = "index";
+        ModelAndView modelAndView = new ModelAndView("/index.html");
+        modelAndView.addObject("name",userName);
+        return modelAndView;
     }
 
     @RequestMapping("/get")
